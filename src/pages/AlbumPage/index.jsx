@@ -8,6 +8,7 @@ function AlbumPage() {
   const [tracks, setTracks] = useState([]);
   const location = useLocation();
   const album = location.state.album;
+  console.log(album);
 
   useEffect(() => {
     async function getTracks() {
@@ -27,19 +28,30 @@ function AlbumPage() {
   }, []);
 
   return (
-    <div>
-       <img
-          src={album.images[2]?.url ?? avatar}
-          alt="Artist avatar"
-          className="Card-image"
-        />
-      <p>{album.name}</p>
-      <div className="Tracks-container">
-        {tracks.map((track) => (
-          <p className="Track">{track.name}</p>
-        ))}
+    <main className="Page-container">
+      <div className="Album-container">
+        <div>
+          <img
+            src={album.images[0]?.url ?? avatar}
+            alt="Album cover"
+            className="Album-cover"
+          />
+          <div className="Album-info">
+            <p>{album.name}</p>
+            <p className="Album-date">Release date: {album.release_date}</p>
+          </div>
+        </div>
+        <div>
+          <ol>
+            {tracks.map((track) => (
+              <li key={track.id} className="Track">
+                <p>{track.name}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
 

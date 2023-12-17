@@ -5,9 +5,9 @@ import avatar from "../../avatar.png";
 function AlbumCard({ album }) {
   return (
     <Link state={{ album }} to={`/album/${album.id}`}>
-      <div key={album.id} className="Card">
+      <div key={album.id} className="Album-card">
         <img
-          src={album.images[2]?.url ?? avatar}
+          src={album.images[1]?.url ?? avatar}
           alt="Artist avatar"
           className="Card-image"
         />

@@ -4,12 +4,13 @@ import "./App.css";
 
 const data = new URLSearchParams();
 data.append("grant_type", "client_credentials");
-data.append("client_id", "e3f050682d27442195582e5d08e8e98d");
-data.append("client_secret", "3914d4c498444a48aa95f0645021faa3");
+data.append("client_id", process.env.REACT_APP_CLIENT_ID);
+data.append("client_secret", process.env.REACT_APP_CLIENT_SECRET);
 
 function App() {
   const [search, setSearch] = useState("");
   const [artists, setArtists] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getAccessToken() {
@@ -27,6 +28,7 @@ function App() {
   }, []);
 
   const onSearch = async () => {
+    setIsLoading(true);
     const response = await fetch(
       `https://api.spotify.com/v1/search?q=${search}&type=artist&limit=20`,
       {
@@ -37,6 +39,7 @@ function App() {
     );
     const json = await response.json();
     setArtists(json.artists.items);
+    setIsLoading(false);
   };
 
   return (
@@ -57,10 +60,14 @@ function App() {
           }
         }}
       />
-      <button className="Button" onClick={onSearch} disabled={!search}>
-        Search
+      <button
+        className="Button"
+        onClick={onSearch}
+        disabled={!search || isLoading}
+      >
+        {isLoading ? "Loading..." : "Search"}
       </button>
-      <h1 className="Artists-title">Artists</h1>
+      <h1 className="Artists-title">{artists.length ? "Artists" : "Find your favourite artists"}</h1>
       <div className="Grid">
         {artists.map((artist) => (
           <ArtistCard key={artist.id} artist={artist} />
