@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import "./AlbumPage.css";
 import avatar from "../../avatar.png";
+import { getAccessToken } from "../../utils/getAccessToken";
 
 function AlbumPage() {
   const { id } = useParams();
@@ -11,19 +12,27 @@ function AlbumPage() {
   console.log(album);
 
   useEffect(() => {
-    async function getTracks() {
-      const response = await fetch(
-        `https://api.spotify.com/v1/albums/${id}/tracks`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
-      const json = await response.json();
-      setTracks(json.items);
+    async function getAuthorizedTracks() {
+      async function getTracks() {
+        const response = await fetch(
+          `https://api.spotify.com/v1/albums/${id}/tracks`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        const json = await response.json();
+        return json;
+      }
+      let data = await getTracks();
+      if (data.error?.status === 401) {
+        await getAccessToken();
+        data = await getTracks();
+      }
+      setTracks(data.items);
     }
-    getTracks();
+    getAuthorizedTracks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -5,7 +5,7 @@ This project was created for a Fixed technical instance.
 
 ## Environment variables
 
-Client id and client secret values from the Spotify App, which are needed to get the access token for using the API, are stored in a .env file, which is in git ignore, so it's not in this repo.
+Client id and client secret values from the Spotify App, which are needed to get the access token for using the API, are stored in a .env file, which is in git ignore, so it's not in this repo. The .env file should be placed in the root of the repository.
 
 ## Dependencies
 
