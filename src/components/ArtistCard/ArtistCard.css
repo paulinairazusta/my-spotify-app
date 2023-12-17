@@ -1,0 +1,43 @@
+.Card {
+    background-color: rgb(24, 24, 24);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    max-height: 209px;
+    max-width: 144px;
+    padding: 12px;
+    position: relative;
+    text-align: center;
+    transition: background-color .3s;
+}
+
+.Card:hover {
+    background-color: rgb(40, 40, 40);
+}
+
+.Card-image {
+    border-radius: 8px;
+    height: 120px;
+    width: 120px;    
+}
+
+.Card-name {
+    color: white;
+    flex: 1;
+    font-size: 14px;
+    text-overflow: ellipsis;
+}
+
+.Card-tag {
+    background-color: rgb(18, 18, 18);
+    border: 1px solid white;
+    border-radius: 12px;
+    color: white;
+    font-size: 10px;
+    line-height: 10px;
+    padding: 2px 8px;
+    position: absolute;
+    right: 14px;
+    top: 115px;
+}
